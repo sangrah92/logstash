@@ -1,0 +1,23 @@
+input {
+  http { port => 8080 }
+}
+
+output {
+ stdout { codec => rubydebug }
+ http {
+  url =>
+ "https://vneteventhub.servicebus.windows.net/vnextawx/messages"
+  content_type =>
+   "application/x-www-form-urlencoded"
+  http_method =>
+   "post"
+  format =>
+   "message"
+  message =>
+   '%{@timestamp} : %{message}'
+  headers => {
+    "Host" => "vneteventhub.servicebus.windows.net"
+    "Authorization" => "SharedAccessSignature sr=https%3A%2F%2Fvneteventhub.servicebus.windows.net%2Fvnextawx&sig=1eoM4tFPF23UjkCajw6g/pjj9kTHlmH5AYX4tFPaR0A%3D&se=15867997860&skn=RootManageSharedAccessKey"
+  }
+ }
+}
